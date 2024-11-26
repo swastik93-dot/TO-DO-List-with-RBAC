@@ -1,0 +1,128 @@
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 20px;
+}
+
+#submitButton {
+  margin-top: 20px;
+}
+
+#submitForm {
+  margin-top: 40px;
+}
+
+#taskInTable {
+  max-width: 300px;
+}
+
+#delete {
+  width: 60px;
+}
+
+#edit {
+  width: 60px;
+}
+
+.edit {
+  background-color: #f8f9fa;
+}
+
+.not-edit {
+  border: none;
+}
+
+.not-edit {
+  background-color: white;
+}
+
+.crossed {
+  text-decoration: line-through;
+}
+
+input.form-control.mb-3 {
+  margin-bottom: 20px;
+  max-width: 500px;
+}
+
+.task-form {
+display: flex; 
+align-items: center; 
+gap: 10px; 
+width: 100%;
+}
+
+.task-form .form-group {
+display: flex;
+align-items: center;
+}
+
+.task-form .form-control {
+flex-grow: 1; 
+}
+.date-time-box {
+position: fixed; 
+top: 10px;
+right: 10px;
+height: 70PX;
+background-color: #838685; 
+color: white; 
+padding: 10px 15px;
+margin: 15px; 
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+font-size: 1.2rem;
+z-index: 1000; 
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.btn {
+height: 42px;
+width: 150px;
+}
+
+
+.d-flex .btn {
+margin-right: 10px; 
+}
+
+.date-filter-dropdown {
+position: absolute;
+background-color: white;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+max-width: 200px;
+z-index: 1000;
+}.user-email-box {
+  position: fixed;
+  top: 10px;
+  left: 6px;
+  background-color: #dbf1f0;
+  color: #333;
+  padding: 3px 6px; 
+  border-radius: 3px; 
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+  font-size: 0.9rem; 
+  z-index: 1000;
+  
+}
+
+.text-warning {
+  color: yellow; 
+}
+
+.text-muted {
+  color: gray; 
+}
+
+.fa-star {
+  transition: color 0.3s ease; 
+}
+/* .fa-star {
+  transition: color 8.3s ease; 
+} */
+

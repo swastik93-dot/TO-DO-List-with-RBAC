@@ -1,0 +1,196 @@
+<div class="container todo-list-wrapper">
+  <div class="user-email-box">
+    <span><strong>User:</strong> {{ currentUserEmail }}</span>
+  </div>
+
+  <div class="card" style="padding: 10px;">
+    <div class="date-time-box">
+      <i class="fas fa-clock"></i>&nbsp;&nbsp;&nbsp;<span id="datetime">{{ currentDateTime | date: 'short' }}</span>
+    </div>
+
+    <h2 class="card-title text-center mb-4">To-Do Application</h2>
+
+    <form id="taskForm" (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm" class="task-form">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="task"
+          placeholder="Enter task"
+          ngModel
+          style="height: 42px; width: 500px;"
+          name="task"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="date"
+          class="form-control"
+          id="dueDate"
+          ngModel
+          name="dueDate"
+        />
+      </div>
+      <div class="form-group">
+        <button
+          [disabled]="taskForm.invalid"
+          id="submitButton"
+          type="submit"
+          style="margin-bottom: 18px;"
+          class="btn btn-primary"
+        >
+          Add Task
+        </button>
+      </div>
+    </form>
+
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="Search task"
+      [(ngModel)]="searchTerm"
+      (input)="filterTasks()"
+    />
+
+    <!-- Row for Date Filter and Task Filter -->
+    <div class="row mb-3 align-items-center">
+      <div class="col-auto">
+        <button class="btn btn-secondary" (click)="toggleDateFilter()">
+          {{ showDateFilter ? 'Show All Tasks' : 'Filter by Date' }}
+        </button>
+      </div>
+      <div class="col-auto" style="padding-left: 5px;">
+        <select
+          class="form-control"
+          [(ngModel)]="selectedFilter"
+          (change)="filterTasks()"
+          style="width: auto;"
+        >
+          <option value="">All Tasks</option>
+          <option value="important">Important Tasks</option>
+          <option value="pending">Pending Tasks</option>
+          <option value="completed">Completed Tasks</option>
+        </select>
+      </div>
+    </div>
+
+<!-- Date Filter Modal -->
+<div class="modal fade" id="dateFilterModal" tabindex="-1" aria-labelledby="dateFilterModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dateFilterModalLabel">Filter by Date</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            [class.active]="date === selectedDate"
+            *ngFor="let date of uniqueDates"
+            (click)="selectDate(date)"
+          >
+            {{ date | date: 'shortDate' }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <table class="table">
+      <thead class="text-center">
+        <tr>
+          <th scope="col">Task</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Important</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let t of paginatedTasks; index as i">
+          <td>
+            <input
+              [ngClass]="{ crossed: t.isCompleted }"
+              #taskinput
+              type="text"
+              class="form-control"
+              id="taskInTable"
+              [value]="t.taskName"
+              [readOnly]="!t.isEditable"
+            />
+          </td>
+          <td>{{ t.dueDate | date: 'shortDate' }}</td>
+          <td>
+            <button
+              (click)="onCheck((currentPage - 1) * tasksPerPage + i)"
+              [ngClass]="{
+                'btn-success': !t.isCompleted,
+                'btn-secondary': t.isCompleted
+              }"
+              class="btn btn-sm"
+            >
+              {{ t.isCompleted ? "Undo" : "Complete" }}
+            </button>
+          </td>
+          <td>
+            <i
+              (click)="onMarkAsImportant((currentPage - 1) * tasksPerPage + i)"
+              [ngClass]="{
+                'fas fa-star': true,
+                'text-warning': t.isImportant,
+                'text-muted': !t.isImportant
+              }"
+              class="fa-2x"
+              style="cursor: pointer;"
+            ></i>
+          </td>
+          <td>
+            <button
+              id="edit"
+              class="btn btn-warning btn-sm"
+              (click)="openEditModal((currentPage - 1) * tasksPerPage + i)"
+            >
+              Edit
+            </button>
+          </td>
+          <td>
+            <button
+              id="delete"
+              class="btn btn-danger btn-sm"
+              (click)="onDelete((currentPage - 1) * tasksPerPage + i)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination  -->
+    <nav *ngIf="totalPages() > 1">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of [].constructor(totalPages()); let i = index"
+          [class.active]="currentPage === i + 1"
+        >
+          <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages()">
+          <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+    <app-edit-task-modal #editTaskModal (save)="onSave($event)"></app-edit-task-modal>
+  </div>
+</div>
+

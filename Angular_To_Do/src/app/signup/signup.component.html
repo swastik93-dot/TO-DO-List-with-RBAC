@@ -1,0 +1,26 @@
+
+<div class="container">
+  <h2 class="text-center mt-4">Signup</h2>
+  <form #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" ngModel name="name" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" ngModel name="email" required
+      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" ngModel name="password" required>
+    </div>
+    <div class="mb-3">
+      <label for="repassword" class="form-label">Re-enter Password</label>
+      <input type="password" class="form-control" id="repassword" ngModel name="repassword" required>
+      <div *ngIf="signupForm.submitted && passwordMismatch" class="text-danger">Passwords do not match</div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Signup</button>
+    <p class="mt-3">Already have an account? <a routerLink="/login">Login</a></p>
+  </form>
+</div>   

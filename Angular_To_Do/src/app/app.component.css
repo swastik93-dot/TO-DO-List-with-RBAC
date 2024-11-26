@@ -1,0 +1,81 @@
+
+   .navbar {
+    margin-bottom: 20px;
+    width: 70%; /* 70% of total screen width */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .todo-list-wrapper {
+    background-image: url('https://img.freepik.com/premium-photo/list-icon-notebook-with-completed-todo-list-3d-render_471402-428.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh; /* Full viewport height */
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  #taskForm {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #taskForm .form-control {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  #submitButton {
+    flex-shrink: 0;
+  }
+  
+  .table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .table .btn {
+    width: 80px;
+  }
+  
+  #taskInTable {
+    border: none;
+    background: transparent;
+    width: 100%;
+  }
+  
+  .crossed {
+    text-decoration: line-through;
+  }
+  
+  .logout-button {
+    color: #fff !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+  }
+  
+
+  .text-warning {
+    color: yellow; /* Color for the star when important */
+  }
+  
+  .text-muted {
+    color: gray; /* Color for the star when not important */
+  }
+  
+  .fa-star {
+    transition: color 0.3s ease; /* Smooth color transition */
+  }

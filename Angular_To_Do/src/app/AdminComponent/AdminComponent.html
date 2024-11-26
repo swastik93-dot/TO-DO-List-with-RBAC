@@ -1,0 +1,92 @@
+
+
+<div class="container todo-list-wrapper">
+  <div class="card" style="padding: 20px;">
+    <h2 class="card-title text-center mb-4">Admin Dashboard</h2>
+
+    <!-- New User Creation Button -->
+    <div class="text-end mb-3">
+      <button class="btn btn-success" (click)="openNewUserModal()">Add New User</button>
+    </div>
+
+    <!-- User Search Form -->
+    <form #searchForm="ngForm" (ngSubmit)="onSearchUser(searchForm)">
+      <div class="input-group mb-3">
+        <input type="email" class="form-control" placeholder="Enter user email" name="email" ngModel required>
+        <button class="btn btn-primary" type="submit" [disabled]="searchForm.invalid">Search User</button>
+      </div>
+    </form>
+
+    <!-- New User Modal -->
+    <div class="modal" [class.show]="showNewUserModal" [style.display]="showNewUserModal ? 'block' : 'none'">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create New User</h5>
+            <button type="button" class="btn-close" (click)="closeNewUserModal()"></button>
+          </div>
+          <div class="modal-body">
+            <form #newUserForm="ngForm" (ngSubmit)="onCreateUser(newUserForm)">
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" ngModel name="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="newEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="newEmail" ngModel name="email" required
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+              </div>
+              <div class="mb-3">
+                <label for="newPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="newPassword" ngModel name="password" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeNewUserModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary" [disabled]="newUserForm.invalid">Create User</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Backdrop -->
+    <div class="modal-backdrop fade show" *ngIf="showNewUserModal"></div>
+
+    <!-- Existing Tasks Section -->
+    <div *ngIf="userEmail">
+      <h3>Tasks for {{ userEmail }}</h3>
+      <form #assignForm="ngForm" (ngSubmit)="onAssignTask(assignForm)" class="mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Enter new task" name="task" ngModel required>
+          <input type="date" class="form-control" name="dueDate" ngModel>
+          <button class="btn btn-success" type="submit" [disabled]="assignForm.invalid">Assign Task</button>
+        </div>
+      </form>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Important</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of userTasks; let i = index">
+            <td>{{ task.taskName }}</td>
+            <td>{{ task.dueDate | date:'shortDate' }}</td>
+            <td>{{ task.isCompleted ? 'Completed' : 'Pending' }}</td>
+            <td>
+              <i [ngClass]="{'fas fa-star text-warning': task.isImportant, 'far fa-star': !task.isImportant}"></i>
+            </td>
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="onDeleteTask(i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
